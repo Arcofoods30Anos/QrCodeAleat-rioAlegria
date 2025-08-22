@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Setembro Amarelo</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#0b0f14;
+      color:#fefce8;
+      display:flex;align-items:center;justify-content:center;
+      height:100vh;text-align:center;
+    }
+    .container{
+      background:#111827;
+      padding:24px;
+      border-radius:12px;
+      max-width:600px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.45);
+    }
+    .brand{
+      font-size:.9rem;
+      opacity:.6;
+      margin-bottom:12px;
+    }
+    .badge{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(250,204,21,.12);
+      border:1px solid rgba(250,204,21,.35);
+      color:#fef9c3;
+      font-size:.85rem;
+      margin-bottom:14px;
+    }
+    .mensagem{
+      font-size:1.4rem;
+      font-weight:bold;
+      margin:16px 0;
+    }
+    .sub{font-size:.9rem;opacity:.7}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">Arcofoods — alimentos, sorrisos e bebidas</div>
+    <div class="badge">Setembro Amarelo</div>
+    <div id="mensagem" class="mensagem">Carregando...</div>
+    <div class="sub">Você não está sozinho. Falar é um passo de coragem.</div>
+  </div>
+
+  <script>
+    const mensagens = [
+      "A alegria merece ser vivida por inteiro, sem culpa.",
+      "Reconhecer a alegria em pequenas coisas fortalece a saúde mental.",
+      "Permita-se sorrir mesmo em dias nublados.",
+      "A alegria não anula a dor, mas ajuda a atravessá-la.",
+      "Quando compartilhada, a alegria se multiplica.",
+      "A alegria é um combustível poderoso, mas precisa ser nutrida todos os dias.",
+      "Até os momentos simples podem ser fontes profundas de alegria.",
+      "A alegria verdadeira não depende de perfeição, mas de presença.",
+      "Viver a alegria com consciência fortalece o coração e a mente.",
+      "Alegria é descanso para a alma cansada.",
+      "Cada riso sincero é um gesto de autocuidado.",
+      "A alegria pode ser silenciosa, e ainda assim transformadora.",
+      "Não espere grandes acontecimentos para celebrar a vida.",
+      "A gratidão é um caminho direto para a alegria.",
+      "Valorizar conquistas pequenas é um ato de amor-próprio.",
+      "A alegria não precisa ser euforia, pode ser calma e serenidade.",
+      "Estar em paz consigo mesmo já é uma forma de alegria.",
+      "A alegria pode nascer em meio às dificuldades, se houver esperança.",
+      "Um coração leve encontra alegria até em passos curtos.",
+      "A alegria ajuda a equilibrar os dias de ansiedade e medo.",
+      "O sorriso é um sinal de que ainda existe luz dentro de você.",
+      "Cultivar a alegria fortalece a mente contra a tristeza.",
+      "A alegria é uma escolha que se renova diariamente.",
+      "Ser feliz não é ignorar problemas, mas encontrar motivos para seguir.",
+      "A alegria aproxima, cura e fortalece vínculos.",
+      "Reconhecer sua própria evolução é motivo de alegria.",
+      "A alegria é também saber descansar sem se cobrar.",
+      "Quando você celebra, inspira outros a acreditarem no possível.",
+      "A alegria ensina que a vida tem cores além do cinza.",
+      "Encontrar alegria em si mesmo é liberdade.",
+      "A alegria é sinal de equilíbrio: corpo, mente e coração em harmonia.",
+      "Valorize a alegria como um recurso de saúde, não apenas como emoção passageira.",
+      "Mesmo em meio às dificuldades, um momento de alegria pode renovar sua força.",
+      "A alegria não precisa ser explicada, apenas sentida.",
+      "Permitir-se ser feliz é também um ato de coragem."
+    ];
+
+    function getOrder() {
+      const saved = localStorage.getItem("ordemMensagens");
+      if (saved) return JSON.parse(saved);
+      return shuffle([...Array(mensagens.length).keys()]);
+    }
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    let ordem = getOrder();
+    let pos = parseInt(localStorage.getItem("posicaoMensagem") || "0", 10);
+    if (pos >= ordem.length) { ordem = shuffle([...Array(mensagens.length).keys()]); pos = 0; }
+
+    document.getElementById("mensagem").innerText = mensagens[ordem[pos]];
+    localStorage.setItem("ordemMensagens", JSON.stringify(ordem));
+    localStorage.setItem("posicaoMensagem", String(pos + 1));
+  </script>
+</body>
+</html>
